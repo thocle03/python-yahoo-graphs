@@ -24,11 +24,12 @@ class StockData:
 
 class StockGraph:
     @staticmethod
-    def plot_stock(data, title="Graphique des actions"):
+    def plot_stock(data, title="Graphique des actions", output_file="stock_graph.png"):
         """
-        Trace un graphique des prix de clôture d'une action.
+        Trace un graphique des prix de clôture d'une action et l'enregistre sous forme de fichier PNG.
         :param data: Les données récupérées (DataFrame de pandas).
         :param title: Le titre du graphique.
+        :param output_file: Le nom du fichier de sortie (par défaut: "stock_graph.png").
         """
         if data is not None and not data.empty:
             plt.figure(figsize=(10, 5))
@@ -38,7 +39,8 @@ class StockGraph:
             plt.ylabel("Prix ($)")
             plt.legend()
             plt.grid()
-            plt.show()
+            plt.savefig(output_file)  # Enregistre le graphique sous forme de fichier PNG
+            print(f"Graphique enregistré sous le nom : {output_file}")
         else:
             print("Aucune donnée disponible pour tracer le graphique.")
 
@@ -48,5 +50,5 @@ if __name__ == "__main__":
     tesla_stock = StockData("TSLA")
     tesla_stock.fetch_data(start_date="2023-01-01", end_date="2023-12-01")
 
-    # Tracer le graphique
-    StockGraph.plot_stock(tesla_stock.data, title="Évolution de l'action Tesla (TSLA)")
+    # Tracer et sauvegarder le graphique
+    StockGraph.plot_stock(tesla_stock.data, title="Évolution de l'action Tesla (TSLA)", output_file="tesla_stock_2023.png")
